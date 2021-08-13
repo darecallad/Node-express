@@ -10,7 +10,17 @@ app.get("/", (req, res) => {
 app.get("/api/courses", (req, res) => {
   res.send([1, 2, 3]);
 });
-app.listen(3000, () => console.log("Listen on port 3000"));
+
+app.get("/api/courses/:id", (req, res) => {
+  res.send(req.params.id);
+  // res.send(req.quary);
+  // res.send(req.params.year);
+});
+
+//Environment Variables port:
+// export PORT = 5000
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on port ${port} ...`));
 
 // npm i express
 // npm i -g nodemon
