@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 
+app.use(express.json());
+
 const courses = [
   { id: 1, name: "course1" },
   { id: 2, name: "coures2" },
@@ -24,6 +26,15 @@ app.get("/api/courses/:id", (req, res) => {
 
   // res.send(req.query);
   // res.send(req.params.year);
+});
+
+app.post("/api/courses", (req, res) => {
+  const course = {
+    id: courses.length + 1,
+    name: req.body.name,
+  };
+  courses.push(courses);
+  res.send(course);
 });
 
 //Environment Variables port:
