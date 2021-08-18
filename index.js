@@ -4,6 +4,7 @@ const Joi = require("joi");
 const app = express();
 
 app.use(express.json());
+// post
 
 const courses = [
   { id: 1, name: "course1" },
