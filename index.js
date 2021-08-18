@@ -31,14 +31,10 @@ app.get("/api/courses/:id", (req, res) => {
 });
 
 app.post("/api/courses", (req, res) => {
-  const schema = {
-    name: Joi.string().min(3).required(),
-  };
-
-  const result = Joi.validate(req.body, schema);
-  if (result.error) {
+  const { error } = validateCourse(req.body);
+  if (error) {
     // 400 bad request
-    res.status(400).send(result.error.details[0].message);
+    res.status(400).send(error.details[0].message);
     return;
   }
 
@@ -57,3 +53,30 @@ app.listen(port, () => console.log(`Listening on port ${port} ...`));
 
 // npm i express
 // npm i -g nodemon
+
+app.put("/api/courses/:id", (req, res) => {
+  // first lool up the course
+  // if not existing, return 404
+  const course = courses.find((c) => c.id === parseInt(req.params.id));
+  if (!course) res.status(404).send("the course with given ID was not found");
+  // validate if incalid, return 400 -bad req
+
+  const { error } = validateCourse(req.body);
+  if (error) {
+    // 400 bad request
+    res.status(400).send(error.details[0].message);
+    return;
+  }
+  // update course
+  // return the updated course
+  course.name = req.body.name;
+  res.send(course);
+});
+
+function validateCourse(course) {
+  const schema = {
+    name: Joi.string().min(3).required(),
+  };
+
+  return Joi.validate(course, schema);
+}
