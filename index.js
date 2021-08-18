@@ -1,10 +1,19 @@
 const express = require("express");
+const logger = require("./logger");
 const Joi = require("joi");
 
 const app = express();
 
 app.use(express.json());
 // post
+
+app.use(logger);
+//install middleware function
+
+app.use(function (req, res, next) {
+  console.log("Authenticating...");
+  next();
+}); //install middleware function
 
 const courses = [
   { id: 1, name: "course1" },
