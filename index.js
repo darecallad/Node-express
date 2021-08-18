@@ -83,7 +83,7 @@ function validateCourse(course) {
   return Joi.validate(course, schema);
 }
 
-app.delete("api/courses/:id", (req, res) => {
+app.delete("/api/courses/:id", (req, res) => {
   //look up the course
   // not existing, return 404
   const course = courses.find((c) => c.id === parseInt(req.params.id));
