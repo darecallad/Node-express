@@ -1,12 +1,14 @@
 const express = require("express");
 const logger = require("./logger");
 const Joi = require("joi");
-
+// morgan for http log
+// helmet for secure app
 const app = express();
 
 app.use(express.json());
 // post
-
+app.use(express.urlencoded({ extended: true })); //allow build in url
+app.use(express.static("public"));
 app.use(logger);
 //install middleware function
 
