@@ -5,9 +5,13 @@ const express = require("express");
 const logger = require("./logger");
 const Joi = require("joi");
 const morgan = require("morgan");
+
 // morgan for http log
 // helmet for secure app
 const app = express();
+
+app.set("view engine", "pug");
+// app.set("views", "./views"); //default
 
 // Configuration
 console.log("application name: " + config.get("name"));
@@ -49,7 +53,7 @@ const courses = [
 ];
 
 app.get("/", (req, res) => {
-  res.send("Hello World yes 123");
+  res.render("index", { title: "My Express App", message: "hello" });
 });
 // app.post();
 // app.put();
