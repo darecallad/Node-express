@@ -1,3 +1,5 @@
+const startupDebugger = require("debug")("app:startup");
+const dbDebugger = require("debug")("app:db");
 const config = require("config");
 const express = require("express");
 const logger = require("./logger");
@@ -25,9 +27,16 @@ app.use(logger);
 
 if (app.get("env") === "development") {
   app.use(morgan("tiny"));
-  console.log("morgan enabled");
+  startupDebugger("morgan enabled");
 }
 // export NODE_ENV=production
+
+//Do work...
+dbDebugger("connected to the database");
+//environment variables
+// export DEBUG=app:startup
+// export DEBUG=app:*
+// DEBUG=app:db nodemon index.js
 
 app.use(function (req, res, next) {
   console.log("Authenticating...");
