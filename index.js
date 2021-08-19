@@ -2,8 +2,9 @@ const startupDebugger = require("debug")("app:startup");
 const dbDebugger = require("debug")("app:db");
 const config = require("config");
 const express = require("express");
-const logger = require("./logger");
+const logger = require("./middleware/logger");
 const courses = require("./routes/courses");
+const homepage = require("./routes/homepage");
 const Joi = require("joi");
 const morgan = require("morgan");
 
@@ -30,6 +31,7 @@ app.use(express.static("public"));
 app.use(logger);
 //install middleware function
 app.use("/api/courses", courses); // every router start with /api/courses
+app.use("/", homepage);
 
 if (app.get("env") === "development") {
   app.use(morgan("tiny"));
@@ -48,13 +50,6 @@ app.use(function (req, res, next) {
   console.log("Authenticating...");
   next();
 }); //install middleware function
-
-app.get("/", (req, res) => {
-  res.render("index", { title: "My Express App", message: "hello" });
-});
-// app.post();
-// app.put();
-// app.delete();
 
 //Environment Variables port:
 // export PORT = 5000
