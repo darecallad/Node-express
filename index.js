@@ -1,9 +1,13 @@
 const express = require("express");
 const logger = require("./logger");
 const Joi = require("joi");
+const morgan = require("morgan");
 // morgan for http log
 // helmet for secure app
 const app = express();
+
+// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+// console.log(`app: ${app.get("env")}`);
 
 app.use(express.json());
 // post
@@ -11,6 +15,12 @@ app.use(express.urlencoded({ extended: true })); //allow build in url
 app.use(express.static("public"));
 app.use(logger);
 //install middleware function
+
+if (app.get("env") === "development") {
+  app.use(morgan("tiny"));
+  console.log("morgan enabled");
+}
+// export NODE_ENV=production
 
 app.use(function (req, res, next) {
   console.log("Authenticating...");
