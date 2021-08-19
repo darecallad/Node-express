@@ -1,3 +1,4 @@
+const config = require("config");
 const express = require("express");
 const logger = require("./logger");
 const Joi = require("joi");
@@ -5,6 +6,12 @@ const morgan = require("morgan");
 // morgan for http log
 // helmet for secure app
 const app = express();
+
+// Configuration
+console.log("application name: " + config.get("name"));
+console.log("mail server: " + config.get("mail.host"));
+console.log("mail password: " + config.get("mail.password"));
+// export app_password= 1234
 
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 // console.log(`app: ${app.get("env")}`);
